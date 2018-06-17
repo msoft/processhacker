@@ -280,9 +280,10 @@ VOID PhSearchMemoryString(
             BOOLEAN printable2;
             ULONG length;
 
+            PVOID bufferAddress = PTR_ADD_OFFSET(baseAddress, offset);
             if (!NT_SUCCESS(NtReadVirtualMemory(
                 ProcessHandle,
-                PTR_ADD_OFFSET(baseAddress, offset),
+                bufferAddress,
                 buffer,
                 readSize,
                 NULL
@@ -449,7 +450,7 @@ CreateResult:
                     }
 
                     if (!(isWide && !detectUnicode) && (result = PhCreateMemoryResult(
-                        PTR_ADD_OFFSET(baseAddress, i - bias - lengthInBytes),
+                        PTR_ADD_OFFSET(bufferAddress, i - bias - lengthInBytes),
                         baseAddress,
                         lengthInBytes
                         )))
